@@ -25,7 +25,8 @@ class LoadingScene extends umi.DisplayObject {
         context.loadImage("assets/bg_clear02.png"),
         context.loadImage("assets/bg_clear03.png"),
         context.loadImage("assets/bg_clear04.png"),
-        context.loadImage("assets/bg_clear05.png")
+        context.loadImage("assets/bg_clear05.png"),
+        new Future.delayed(new Duration(seconds: 1)),
       ]);
     } catch (e) {}
     try {
@@ -33,7 +34,8 @@ class LoadingScene extends umi.DisplayObject {
         context.loadImage("assets/se_start.png"),
         context.loadString("assets/se_start.json"),
         context.loadString("assets/se_play.json"),
-        context.loadImage("assets/se_play.png")
+        context.loadImage("assets/se_play.png"),
+        new Future.delayed(new Duration(seconds: 1)),
       ]);
     } catch (e) {}
 
@@ -43,6 +45,7 @@ class LoadingScene extends umi.DisplayObject {
         context.loadString("assets/se_setting.json"),
         context.loadImage("assets/font_a.png"),
         context.loadString("assets/font_a.json"),
+        new Future.delayed(new Duration(seconds: 1)),
       ]);
     } catch (e) {}
 

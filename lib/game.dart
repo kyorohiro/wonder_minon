@@ -1,13 +1,21 @@
 library wonder_minon;
 import 'package:umiuni2d_sprite/umiuni2d_sprite.dart' as umi;
+import 'package:umiuni2d_sprite/umiuni2d_sprite_utils.dart' as umi;
 import 'dart:async';
 
 part 'scene/loading.dart';
+part 'scene/start.dart';
+
 
 void request(umi.GameWidget widget, String requst) {
   if(requst == "loading") {
     widget.stage.root.clearChild();
     widget.stage.root.addChild(new LoadingScene());
+  }
+  else if(requst == "start") {
+    print("start request");
+    widget.stage.root.clearChild();
+    widget.stage.root.addChild(new StartScene());
   }
 }
 
@@ -25,6 +33,7 @@ Future onStart(umi.GameWidget widget) async {
       await new Future.delayed(new Duration(milliseconds: 20));
       continue;
     }
+
 
     widget.stage.kick( new DateTime.now().millisecondsSinceEpoch);
     widget.stage.markPaintshot();
