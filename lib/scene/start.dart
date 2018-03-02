@@ -1,12 +1,12 @@
 part of wonder_minon;
 
 class StartScene extends umi.DisplayObject {
-  umi.Image bgimg;
-  umi.SpriteSheetInfo info;
   umi.GameWidget builder;
   umi.Paint p = new umi.Paint();
 
-  umi.BitmapTextSprite text;
+  umi.BitmapTextSprite titleObj;
+  umi.BitmapTextSprite startObj;
+
   StartScene();
 
   @override
@@ -14,59 +14,44 @@ class StartScene extends umi.DisplayObject {
     super.onInit(stage);
     print("oninit# StartScene");
     this.builder = stage.builder;
-    /*builder.loadImage("assets/se_start.png").then((v) {
-      bgimg = v;
-    });
-    builder.loadString("assets/se_start.json").then((v) {
-      info = new umi.SpriteSheetInfo.fronmJson(v);
-    });*/
 
-    umi.Image fontImage = null;
-    String fontJsonSrc = null;
-    builder.loadImage("assets/font_a.png").then((v) {
-      fontImage = v;
-      if(fontJsonSrc != null) {
-        print("${fontJsonSrc}");
-        text = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "Wonder Minon");
-        text.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
-        addChild(text);
-      }
-    });
-    builder.loadString("assets/font_a.json").then((v) {
-      fontJsonSrc  = v;
-      if(fontImage != null) {
-        text = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "Wonder Minon");
-        text.x = 80.0;
-        text.y = 100.0;
-        text.size = 32.0;
-        addChild(text);
-      }
+    Future.wait([builder.loadImage("assets/font_a.png"),builder.loadString("assets/font_a.json")])
+        .then((List<Object> v){
+      umi.Image fontImage = v[0];
+      String fontJsonSrc = v[1];
+      titleObj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "Wonder Minon");
+      titleObj.x = 80.0;
+      titleObj.y = 100.0;
+      titleObj.size = 32.0;
+
+      startObj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "START");
+      startObj.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
+      startObj.x = 170.0;
+      startObj.y = 200.0;
+      startObj.size = 20.0;
+      addChild(titleObj);
+      addChild(startObj);
+
     });
 
   }
 
-  bool isTouch = false;
-  bool onTouch(umi.Stage stage, int id, umi.StagePointerType type, double globalX, globalY) {
-    if (isTouch == true && type == umi.StagePointerType.UP) {
-      isTouch = false;
-      //
-    } else if (type == umi.StagePointerType.DOWN) {
-      isTouch = true;
-    }
-    return false;
-  }
   umi.Rect t = new umi.Rect(0.0, 0.0, 100.0, 100.0);
   int i=0;
+  double j=0.0;
   void onPaint(umi.Stage stage, umi.Canvas canvas) {
-    if (bgimg != null && info != null) {
-      canvas.drawImageRect(bgimg, info.frameFromFileName("BG001.png").srcRect, info.frameFromFileName("BG001.png").dstRect);
-    }
-    if(text != null) {
+    if(titleObj != null) {
       i+=5;
+      j+=0.02;
       if(i>0xff) {
         i = 0xff;
       }
-      text.color = new umi.Color.argb(i,i,i,i);
+      if(j>=1.0) {
+        j=0.5;
+      }
+      titleObj.color = new umi.Color.argb(i,i,i,i);
+      int v = (i.toDouble()*j).toInt();
+      startObj.color = new umi.Color.argb(v,v,v,v);
     }
   }
 }
