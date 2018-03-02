@@ -51,7 +51,7 @@ class StartScene extends umi.DisplayObject {
       }
       titleObj.color = new umi.Color.argb(i,i,i,i);
       int v = (i.toDouble()*j).toInt();
-      startObj.color = new umi.Color.argb(v,v,v,v);
+      startObj.color = new umi.Color.argb(v,0xff,0xff,0xff);
     }
   }
 }
