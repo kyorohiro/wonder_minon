@@ -25,50 +25,26 @@ class PlayScene extends umi.DisplayObject {
   umi.SpriteSheetInfo spriteInfo = null;
   umi.Image image = null;
   umi.Joystick joystick;
+  umi.ExButton rotateL;
+  umi.ExButton rotateR;
 
-  PlayScene(this.builder, this.game, this.joystick, {int level: 1}) {
-//    rotateR = new TinyButton("r", 50.0, 50.0, onTouchCallback, exclusiveTouch: false);
-//   rotateL = new TinyButton("l", 50.0, 50.0, onTouchCallback, exclusiveTouch: false);
-//    stopButton = new TinyButton("s", 50.0, 50.0, onTouchCallback);
-//    rotateR.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
-//    rotateL.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
-//    stopButton.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
+  PlayScene(this.builder, this.game, this.joystick,  this.rotateL,this.rotateR,{int level: 1}) {
     playboard = new MinoTableUI(builder, game.table);
     nextUI = new MinoNextUI(builder);
     scoreUI = new ScoreUI(this.spriteInfo, this.image);
     levelUI = new ScoreUI(this.spriteInfo, this.image);
     levelUI.size = 3;
-    {
-      //
-      //
-     // addChild(snows);
-      //snows.addIdName("S001.png", 0.25, randomSize: true);
-      //snows.addIdName("S002.png", 0.25, randomSize: true);
-      //snows.addIdName("S001.png", 0.25, randomSize: true);
-      //snows.addIdName("S002.png", 0.25, randomSize: true);
-      //snows.addIdName("S001.png", 0.25, randomSize: true);
-      //snows.addIdName("S002.png", 0.25, randomSize: true);
-
-    }
 
     addChild(playboard);
     addChild(nextUI);
     addChild(scoreUI);
     addChild(levelUI);
 
-    //addChild(stopButton);
-    //addChild(joystick);
-    //addChild(rotateR);
-    //addChild(rotateL);
-
-    playboard.mat.translate(100.0, 25.0, 0.0);
-    //joystick.mat.translate(100.0, 250.0, 0.0);
-    //rotateL.mat.translate(230.0, 225.0, 0.0);
-    //rotateR.mat.translate(300.0, 225.0, 0.0);
-    //stopButton.mat.translate(300.0, 130.0, 0.0);
-    nextUI.mat.translate(225.0, 153.0, 0.0);
-    scoreUI.mat.translate(225.0, 50.0, 0.0);
-    levelUI.mat.translate(225.0, 85.0, 0.0);
+    playboard.mat.scale(1.25, 1.25, 0.0);
+    playboard.mat.translate(80.0, 25.0, 0.0);
+    nextUI.mat.translate(250.0, 153.0, 0.0);
+    scoreUI.mat.translate(250.0, 50.0, 0.0);
+    levelUI.mat.translate(250.0, 85.0, 0.0);
     //
     //
     builder.loadImage("assets/se_play.png").then((umi.Image i) {
@@ -148,20 +124,22 @@ class PlayScene extends umi.DisplayObject {
       game.downPlusWithLevel(timeStamp, force: joystick.registerUp);
     }
 
-//    if (rotateR.isTouch || (rotateR.registerDown == true && rotateR.registerUp == true)) {
-//      rotateR.registerDown = false;
-//      if(game.rotateRWithLevel(timeStamp, force: rotateR.registerUp)) {
+    if (rotateR.isTouch || (rotateR.registerDown == true && rotateR.registerUp == true)) {
+      rotateR.registerDown = false;
+      if(game.rotateRWithLevel(timeStamp, force: rotateR.registerUp)) {
 //        this.root.startB();
-//      }
-//    }
-//    if (rotateL.isTouch || (rotateL.registerDown == true && rotateL.registerUp == true)) {
-//      rotateL.registerDown = false;
-//      if(game.rotateLWithLevel(timeStamp, force: rotateL.registerUp)) {
-//        this.root.startB();
-//      }
-//    }
+      }
+    }
+    if (rotateL.isTouch || (rotateL.registerDown == true && rotateL.registerUp == true)) {
+      rotateL.registerDown = false;
+      //rotateL.registerUp = false;
+      if(game.rotateLWithLevel(timeStamp, force: rotateL.registerUp)) {
+     //   this.root.startB();
+      }
+    }
 
     if (game.isGameOver) {
+      request(stage.context, "room");
       //game.start();
 //      this.root.clearChild().then((_) async {
 //        this.root.addChild(root.clearScene.initFromScore(game.score));
@@ -181,8 +159,8 @@ class PlayScene extends umi.DisplayObject {
 //      this.root.startC();
     }
     joystick.registerUp = false;
-//    rotateL.registerUp = false;
-//    rotateR.registerUp = false;
+    rotateL.registerUp = false;
+    rotateR.registerUp = false;
     game.registerNext = false;
     game.registerClear = false;
   }
@@ -195,9 +173,9 @@ class PlayScene extends umi.DisplayObject {
 //      if (rotateR.isTouch) {
 //        rotateR.mat.translate(rotateR.dx, rotateR.dy, 0.0);
 //      }
-      if (joystick.isTouch) {
-        joystick.mat.translate(joystick.dx, joystick.dy, 0.0);
-      }
+//      if (joystick.isTouch) {
+//        joystick.mat.translate(joystick.dx, joystick.dy, 0.0);
+ //     }
     }
     return false;
   }
