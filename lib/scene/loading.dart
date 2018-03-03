@@ -5,7 +5,7 @@ class LoadingScene extends umi.DisplayObject {
   @override
   void onInit(umi.Stage stage) {
     super.onInit(stage);
-    load(stage.builder);
+    load(stage.context);
   }
 
   int count = 0;

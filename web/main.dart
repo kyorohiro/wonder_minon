@@ -5,7 +5,7 @@ import 'package:wonder_minon/game.dart' as wm;
 void main() {
   umi.GameWidget game = new uni.GameWidget(
     root: new umi.GameRoot(400.0, 300.0, backgroundColor: new umi.Color.argb(0xff, 0xff, 0x00, 0x00)),
-    background: new umi.GameBackground(backgroundColor: new umi.Color.argb(0xff, 0xff, 0xff, 0xff)),
+    background: new umi.GameBackground(backgroundColor: new umi.Color.argb(0xff, 0xff, 0x00, 0x00)),
   );
   game.start(onStart:wm.onStart);
 }

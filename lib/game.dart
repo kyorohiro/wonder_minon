@@ -5,6 +5,8 @@ import 'dart:async';
 
 part 'scene/loading.dart';
 part 'scene/start.dart';
+part 'scene/room.dart';
+part 'scene/play.dart';
 
 
 void request(umi.GameWidget widget, String requst) {
@@ -17,6 +19,14 @@ void request(umi.GameWidget widget, String requst) {
     widget.stage.root.clearChild();
     widget.stage.root.addChild(new StartScene());
   }
+  else if(requst == "room") {
+    widget.stage.root.clearChild();
+    widget.stage.root.addChild(new RoomScene());
+  }
+  else if(requst == "play") {
+    widget.stage.root.clearChild();
+    widget.stage.root.addChild(new PlayScene());
+  }
 }
 
 
@@ -26,6 +36,7 @@ Future onStart(umi.GameWidget widget) async {
 
   int startTime = new DateTime.now().millisecondsSinceEpoch;
   do {
+
     if(!widget.stage.startable) {
       //
       // in preparation
