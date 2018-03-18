@@ -4,16 +4,21 @@ import 'package:umiuni2d_sprite/umiuni2d_sprite_utils.dart' as umi;
 import 'dart:async';
 import 'logic/minon.dart'; // monon logic
 import 'dart:math' as math;
+import 'dart:convert' as conv;
+import 'package:umiuni2d_io/umiuni2d_io.dart' as umiio;
 
 part 'scene/loading.dart';
 part 'scene/start.dart';
 part 'scene/room.dart';
 part 'scene/play.dart';
 part 'layer/front.dart';
+part 'db/db.dart';
 
 
+MinoGame game = new MinoGame();
+Database db;
 
-void request(umi.GameWidget widget, String requst) {
+request(umi.GameWidget widget, String requst) async {
   if(requst == "loading") {
     widget.stage.root.clearChild();
     widget.stage.root.addChild(new LoadingScene());
@@ -34,13 +39,30 @@ void request(umi.GameWidget widget, String requst) {
         (widget.stage.front as Front).buttonLEx,
         (widget.stage.front as Front).buttonREx));
   }
+  else if(requst == "save") {
+    await db.setRank(game.ranking);
+    await db.save();
+  }
 }
 
+loadScore() async {
+  await db.load();
+  List<int> r = await db.getRank();
+  for (int i in r) {
+    game.updateRanking(currentScore: i);
+  }
+}
 
 Future onStart(umi.GameWidget widget) async {
 //  widget.stage.background.
   request(widget, "loading");
 
+  // init db
+  umiio.FileSystem fs = widget.objects["fs"];
+  db = new Database(fs);
+  loadScore();
+
+  //
   int startTime = new DateTime.now().millisecondsSinceEpoch;
   int curretTime = startTime;
   int prevTime = startTime;

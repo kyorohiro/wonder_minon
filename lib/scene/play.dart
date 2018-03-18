@@ -22,8 +22,8 @@ class PlayScene extends umi.DisplayObject {
   MinoNextUI nextUI;
   ScoreUI scoreUI;
   ScoreUI levelUI;
-  umi.SpriteSheetInfo spriteInfo = null;
-  umi.Image image = null;
+  umi.SpriteSheetInfo spriteInfo;
+  umi.Image image;
   umi.Joystick joystick;
   umi.ExButton rotateL;
   umi.ExButton rotateR;
