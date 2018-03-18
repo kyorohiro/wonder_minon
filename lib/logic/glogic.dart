@@ -70,6 +70,10 @@ class MinoGame {
   }
 
   start() {
+    clear();
+  }
+
+  clear() {
     table.clear();
     _isGmaeOver = false;
     score = 0;

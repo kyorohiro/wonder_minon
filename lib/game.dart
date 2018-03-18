@@ -34,7 +34,7 @@ request(umi.GameWidget widget, String requst) async {
   }
   else if(requst == "play") {
     widget.stage.root.clearChild();
-    widget.stage.root.addChild(new PlayScene(widget, new MinoGame(),
+    widget.stage.root.addChild(new PlayScene(widget, game,
         (widget.stage.front as Front).joystick,
         (widget.stage.front as Front).buttonLEx,
         (widget.stage.front as Front).buttonREx));
@@ -42,6 +42,7 @@ request(umi.GameWidget widget, String requst) async {
   else if(requst == "save") {
     await db.setRank(game.ranking);
     await db.save();
+    print("${game.ranking}");
   }
 }
 

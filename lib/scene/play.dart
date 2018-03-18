@@ -51,16 +51,15 @@ class PlayScene extends umi.DisplayObject {
       image = i;
       scoreUI.image = i;
       levelUI.image = i;
-      update();
     });
     builder.loadString("assets/se_play.json").then((String x) {
       spriteInfo = new umi.SpriteSheetInfo.fronmJson(x);
       scoreUI.spriteInfo = spriteInfo;
       levelUI.spriteInfo = spriteInfo;
-      update();
     });
     game.baseLevel = level;
     game.level = level;
+    game.clear();
     print("### game =  ${game.baseLevel}");
   }
   PlayScene initFromLevel(int level) {
@@ -73,21 +72,7 @@ class PlayScene extends umi.DisplayObject {
   umi.Paint p = new umi.Paint();
   umi.Rect d1 = new umi.Rect(0.0, 0.0, 50.0, 50.0);
   umi.Rect d2 = new umi.Rect(0.0, 0.0, 50.0, 50.0);
-  void update() {
-    //snows.onPaint(stage, canvas);
-    if (image != null && spriteInfo != null) {
-//      rotateL.bgImg = image;
-//      rotateL.bgImgDstRect = new TinyRect(0.0, 0.0, 50.0, 50.0);
-//      rotateL.bgImgSrcRect = spriteInfo.frameFromFileName("BT01.png").srcRect;
-//      stopButton.bgImg = image;
-//      rotateR.bgImg = image;
-//      rotateR.bgImgDstRect = new TinyRect(0.0, 0.0, 50.0, 50.0);
-//      rotateR.bgImgSrcRect = spriteInfo.frameFromFileName("BT02.png").srcRect;
-//      stopButton.bgImg = image;
-//      stopButton.bgImgDstRect = new TinyRect(0.0, 0.0, 50.0, 50.0);
-//      stopButton.bgImgSrcRect = spriteInfo.frameFromFileName("BT03.png").srcRect;
-    }
-  }
+
 
   void onTick(umi.Stage stage, int timeStamp) {
     scoreUI.score = game.score;
@@ -140,16 +125,7 @@ class PlayScene extends umi.DisplayObject {
 
     if (game.isGameOver) {
       request(stage.context, "room");
-      //game.start();
-//      this.root.clearChild().then((_) async {
-//        this.root.addChild(root.clearScene.initFromScore(game.score));
-//        try {
-//          await this.root.database.setRank(root.game.ranking);
-//          await this.root.database.save();
-//        } catch (e) {
-//          print("## failed to save score ${e}");
-//        }
-//      });
+      request(stage.context, "save");
     }
     game.onTouchEnd(timeStamp);
     if(game.registerNext == true) {
@@ -166,17 +142,6 @@ class PlayScene extends umi.DisplayObject {
   }
 
   bool onTouch(umi.Stage stage, int id, umi.StagePointerType type, double globalX, globalY) {
-    if (isStart == false) {
-//      if (rotateL.isTouch) {
-//        rotateL.mat.translate(rotateL.dx, rotateL.dy, 0.0);
-//      }
-//      if (rotateR.isTouch) {
-//        rotateR.mat.translate(rotateR.dx, rotateR.dy, 0.0);
-//      }
-//      if (joystick.isTouch) {
-//        joystick.mat.translate(joystick.dx, joystick.dy, 0.0);
- //     }
-    }
     return false;
   }
 
@@ -244,7 +209,6 @@ class MinoTableUI extends umi.DisplayObject {
 class MinoNextUI extends umi.DisplayObject {
   umi.GameWidget builder;
   MinoTable table;
-
 
   MinoNextUI(this.builder) {
     table = new MinoTable(fieldW:5,fieldH:5);
@@ -323,6 +287,7 @@ class ScoreUI extends umi.DisplayObject {
       drawScore(stage, canvas, v, i*12);
     }
   }
+
   void drawScore(umi.Stage stage, umi.Canvas canvas, int v, int x) {
     umi.Paint p = new umi.Paint();
     umi.Rect dst = new umi.Rect(0.0+x, 0.0, 15.0, 15.0);
