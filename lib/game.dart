@@ -33,7 +33,6 @@ void request(umi.GameWidget widget, String requst) {
         (widget.stage.front as Front).joystick,
         (widget.stage.front as Front).buttonLEx,
         (widget.stage.front as Front).buttonREx));
-    // this.builder, this.game, this.joystick,
   }
 }
 

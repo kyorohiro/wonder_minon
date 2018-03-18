@@ -36,13 +36,14 @@ class StartScene extends umi.Scene {
         print("id");
         request(stage.context, "room");
       }));
+      startObj.addExtension(new umi.ExBlink(startObj));
       addChild(titleObj);
       addChild(startObj);
 
     });
 
   }
-
+/*
   umi.Rect t = new umi.Rect(0.0, 0.0, 100.0, 100.0);
   double j=0.0;
   void onPaint(umi.Stage stage, umi.Canvas canvas) {
@@ -54,5 +55,5 @@ class StartScene extends umi.Scene {
       titleObj.color = new umi.Color.argb(0xff,0xff,0xff,0x00);
       startObj.color = new umi.Color.argb((0xff*j).toInt(),0xff,0xff,0x00);
     }
-  }
+  }*/
 }
