@@ -42,21 +42,26 @@ Future onStart(umi.GameWidget widget) async {
   request(widget, "loading");
 
   int startTime = new DateTime.now().millisecondsSinceEpoch;
+  int curretTime = startTime;
+  int prevTime = startTime;
   widget.stage.front = new Front();
+  int wait = 15;
   do {
-
     if(!widget.stage.startable) {
       //
       // in preparation
-      //
       await new Future.delayed(new Duration(milliseconds: 20));
       continue;
     }
 
-
+    curretTime = new DateTime.now().millisecondsSinceEpoch;
     widget.stage.kick(new DateTime.now().millisecondsSinceEpoch);
+    prevTime = curretTime;
     widget.stage.markPaintshot();
-    await new Future.delayed(new Duration(milliseconds: 10));
+    await new Future.delayed(
+      new Duration(milliseconds: 
+            (curretTime-prevTime > wait?1:wait-(curretTime-prevTime))
+      ));
   } while(true);
 }
 
