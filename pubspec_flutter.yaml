@@ -17,6 +17,18 @@ dependencies:
     git:
       url: https://github.com/kyorohiro/umiuni2d_sprite_html5.git
       ref: v0.0.5
+  umiuni2d_io:
+    git:
+      url: https://github.com/kyorohiro/umiuni2d_io.git
+      ref: v0.0.2
+  umiuni2d_io_flutter:
+    git:
+      url: https://github.com/kyorohiro/umiuni2d_io_flutter.git
+      ref: v0.0.2
+  umiuni2d_io_html5:
+    git:
+      url: https://github.com/kyorohiro/umiuni2d_io_html5.git
+      ref: v0.0.2
 flutter:
   uses-material-design: true
   assets:
