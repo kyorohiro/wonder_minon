@@ -31,7 +31,7 @@ request(umi.GameWidget widget, String requst) async {
   }
   else if(requst == "room") {
     widget.stage.root.clearChild();
-    widget.stage.root.addChild(new RoomScene());
+    widget.stage.root.addChild(new RoomScene(game));
   }
   else if(requst == "play") {
     widget.stage.root.clearChild();

@@ -7,7 +7,14 @@ class RoomScene extends umi.Scene {
   umi.BitmapTextSprite _titleObj;
   umi.BitmapTextSprite _playObj;
 
-  RoomScene():super(
+  umi.BitmapTextSprite _score00Obj;
+  umi.BitmapTextSprite _score01Obj;
+  umi.BitmapTextSprite _score02Obj;
+  umi.BitmapTextSprite _score03Obj;
+
+  MinoGame game;
+
+  RoomScene(this.game):super(
       begineColor:new umi.Color(0x00ffffff),
       endColor:new umi.Color(0xffffffff),
       duration:1000);
@@ -23,9 +30,9 @@ class RoomScene extends umi.Scene {
       umi.Image fontImage = v[0];
       String fontJsonSrc = v[1];
       _titleObj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "Level\r\n 1, 2, 3, 4, 5");
-      _titleObj.x = 10.0;
+      _titleObj.x = 30.0;
       _titleObj.y = 50.0;
-      _titleObj.size = 32.0;
+      _titleObj.size = 26.0;
 
       _playObj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "PLAY");//, rect:new umi.Rect(0.0,0.0,100.0,20.0));
       _playObj.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
@@ -36,8 +43,37 @@ class RoomScene extends umi.Scene {
         print("id");
         request(stage.context, "play");
       }));
+
+      _score00Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "current: "+game.score.toString());
+      _score00Obj.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
+      _score00Obj.x = 30.0;
+      _score00Obj.y = 100.0;
+      _score00Obj.size = 15.0;
+
+      _score01Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "01: "+(game.ranking.length == 0?"..":"${game.ranking[0]}"));
+      _score01Obj.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
+      _score01Obj.x = 30.0;
+      _score01Obj.y = 120.0;
+      _score01Obj.size = 15.0;
+
+      _score02Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "02: "+(game.ranking.length == 0?"..":"${game.ranking[1]}"));
+      _score02Obj.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
+      _score02Obj.x = 30.0;
+      _score02Obj.y = 140.0;
+      _score02Obj.size = 15.0;
+
+      _score03Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "03: "+(game.ranking.length == 0?"..":"${game.ranking[2]}"));
+      _score03Obj.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
+      _score03Obj.x = 30.0;
+      _score03Obj.y =160.0;
+      _score03Obj.size = 15.0;
+
       addChild(_titleObj);
       addChild(_playObj);
+      addChild(_score00Obj);
+      addChild(_score01Obj);
+      addChild(_score02Obj);
+      addChild(_score03Obj);
 
     });
   }
