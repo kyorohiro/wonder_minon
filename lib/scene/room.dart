@@ -12,6 +12,12 @@ class RoomScene extends umi.Scene {
   umi.BitmapTextSprite _score02Obj;
   umi.BitmapTextSprite _score03Obj;
 
+  umi.BitmapTextSprite _level01Obj;
+  umi.BitmapTextSprite _level02Obj;
+  umi.BitmapTextSprite _level03Obj;
+  umi.BitmapTextSprite _level04Obj;
+  umi.BitmapTextSprite _level05Obj;
+
   MinoGame game;
 
   RoomScene(this.game):super(
@@ -29,10 +35,38 @@ class RoomScene extends umi.Scene {
         .then((List<Object> v){
       umi.Image fontImage = v[0];
       String fontJsonSrc = v[1];
-      _titleObj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "Level\r\n 1, 2, 3, 4, 5");
-      _titleObj.x = 30.0;
+      _titleObj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "Level");
+      _titleObj.x = 50+30.0;
       _titleObj.y = 50.0;
       _titleObj.size = 26.0;
+
+      {
+        _level01Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc, message: "1");
+        _level01Obj.x = 200+30.0;
+        _level01Obj.y = 50.0;
+        _level01Obj.size = 22.0;
+
+        _level02Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc, message: "2");
+        _level02Obj.x = 200+50.0;
+        _level02Obj.y = 50.0;
+        _level02Obj.size = 22.0;
+
+        _level03Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc, message: "3");
+        _level03Obj.x = 200+70.0;
+        _level03Obj.y = 50.0;
+        _level03Obj.size = 22.0;
+
+        _level04Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc, message: "4");
+        _level04Obj.x = 200+90.0;
+        _level04Obj.y = 50.0;
+        _level04Obj.size = 22.0;
+
+        _level05Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc, message: "5");
+        _level05Obj.x = 200+110.0;
+        _level05Obj.y = 50.0;
+        _level05Obj.size = 22.0;
+
+      }
 
       _playObj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "PLAY");//, rect:new umi.Rect(0.0,0.0,100.0,20.0));
       _playObj.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
@@ -43,6 +77,7 @@ class RoomScene extends umi.Scene {
         print("id");
         request(stage.context, "play");
       }));
+      _playObj.addExtension(new umi.ExBlink(_playObj));
 
       _score00Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "current: "+game.score.toString());
       _score00Obj.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
@@ -74,6 +109,13 @@ class RoomScene extends umi.Scene {
       addChild(_score01Obj);
       addChild(_score02Obj);
       addChild(_score03Obj);
+
+      addChild(_level01Obj);
+      addChild(_level02Obj);
+      addChild(_level03Obj);
+      addChild(_level04Obj);
+      addChild(_level05Obj);
+
 
     });
   }
