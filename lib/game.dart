@@ -11,6 +11,7 @@ part 'scene/loading.dart';
 part 'scene/start.dart';
 part 'scene/room.dart';
 part 'scene/play.dart';
+part 'scene/clear.dart';
 part 'layer/front.dart';
 part 'db/db.dart';
 
@@ -38,6 +39,10 @@ request(umi.GameWidget widget, String requst) async {
         (widget.stage.front as Front).joystick,
         (widget.stage.front as Front).buttonLEx,
         (widget.stage.front as Front).buttonREx));
+  }
+  else if(requst == "clear") {
+    widget.stage.root.clearChild();
+    widget.stage.root.addChild(new ClearScene(game.score));
   }
   else if(requst == "save") {
     await db.setRank(game.ranking);

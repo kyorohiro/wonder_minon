@@ -124,7 +124,7 @@ class PlayScene extends umi.DisplayObject {
     }
 
     if (game.isGameOver) {
-      request(stage.context, "room");
+      request(stage.context, "clear");
       request(stage.context, "save");
     }
     game.onTouchEnd(timeStamp);
