@@ -16,11 +16,14 @@ class RoomScene extends umi.Scene {
   List<umi.ExBlink> _levelOptObj = [];
 
   MinoGame game;
+  umi.Joystick joystick;
 
-  RoomScene(this.game):super(
+  RoomScene(this.game, this.joystick):super(
       begineColor:new umi.Color(0x00ffffff),
       endColor:new umi.Color(0xffffffff),
       duration:1000) {
+    this.joystick.registerDown = false;
+    this.joystick.registerUp = false;
   }
 
   @override
@@ -44,7 +47,7 @@ class RoomScene extends umi.Scene {
         tmp.y = 50.0;
         tmp.size = 22.0;
         umi.ExBlink ex = new umi.ExBlink(tmp);
-        if(game.level == i+1) {
+        if(game.level == i) {
           ex.start();
         } else {
           ex.stop();
@@ -62,7 +65,7 @@ class RoomScene extends umi.Scene {
       _playObj.size = 20.0;
       _playObj.addExtension(new umi.ExButton(_playObj, "test", (String id){
         print("id");
-        request(stage.context, "play");
+        request(stage.context, "play?level=${game.level}");
       }));
       _playObj.addExtension(new umi.ExBlink(_playObj));
 
@@ -100,6 +103,39 @@ class RoomScene extends umi.Scene {
     });
   }
 
+  void updateLevel(int v) {
+    game.level = v;
+    if(game.level > 4) {
+      game.level = 4;
+    }
+    if(game.level < 0) {
+      game.level = 0;
+    }
+    for(int i=0;i<5;i++) {
+      umi.ExBlink ex = this._levelOptObj[i];
+      if(game.level == i) {
+        ex.start();
+      } else {
+        ex.stop();
+      }
+    }
+  }
+
+  void onTick(umi.Stage stage, int timeStamp) {
+    super.onTick(stage, timeStamp);
+    if ((joystick.registerDown == true && joystick.registerUp == true && joystick.directionX_released > 0.55)) {
+      this.joystick.registerDown = false;
+      print("## + >>> ${joystick.directionX} : ${joystick.directionX_released}");
+      updateLevel(game.level+1);
+    }
+    else if ((joystick.registerDown == true && joystick.registerUp == true && joystick.directionX_released < -0.55)) {
+      this.joystick.registerDown = false;
+      updateLevel(game.level-1);
+      print("## - >>> ${joystick.directionX} : ${joystick.directionX_released}");
+    }
+    this.joystick.registerUp = false;
+
+  }
   void onPaint(umi.Stage stage, umi.Canvas canvas) {
   }
 }

@@ -31,14 +31,16 @@ request(umi.GameWidget widget, String requst) async {
   }
   else if(requst == "room") {
     widget.stage.root.clearChild();
-    widget.stage.root.addChild(new RoomScene(game));
+    widget.stage.root.addChild(new RoomScene(game, (widget.stage.front as Front).joystick));
   }
-  else if(requst == "play") {
+  else if(requst.startsWith("play")) {
+    int level = int.parse(Uri.parse(requst).queryParameters["level"]);
     widget.stage.root.clearChild();
     widget.stage.root.addChild(new PlayScene(widget, game,
         (widget.stage.front as Front).joystick,
         (widget.stage.front as Front).buttonLEx,
-        (widget.stage.front as Front).buttonREx));
+        (widget.stage.front as Front).buttonREx,
+        level: level));
   }
   else if(requst == "clear") {
     widget.stage.root.clearChild();
