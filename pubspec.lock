@@ -127,29 +127,23 @@ packages:
   umiuni2d_sprite:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "v0.0.5"
-      resolved-ref: "05e14f81ce2b74482af879ed5c5f4da4e0c9d23c"
-      url: "https://github.com/kyorohiro/umiuni2d_sprite.git"
-    source: git
+      path: "/Users/kyorohiro/devDartUmiuni2d/render/umiuni2d_sprite"
+      relative: false
+    source: path
     version: "0.0.1"
   umiuni2d_sprite_flutter:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "v0.0.5"
-      resolved-ref: c0a2b90d4e1ba1993157a5e1403fcc2cc838a3e2
-      url: "https://github.com/kyorohiro/umiuni2d_sprite_flutter.git"
-    source: git
+      path: "/Users/kyorohiro/devDartUmiuni2d/render/umiuni2d_sprite_flutter"
+      relative: false
+    source: path
     version: "0.0.1"
   umiuni2d_sprite_html5:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "v0.0.5"
-      resolved-ref: e055a18be9cbf9176ba9de32da88d5bb5474175d
-      url: "https://github.com/kyorohiro/umiuni2d_sprite_html5.git"
-    source: git
+      path: "/Users/kyorohiro/devDartUmiuni2d/render/umiuni2d_sprite_html5"
+      relative: false
+    source: path
     version: "0.0.1"
   vector_math:
     dependency: transitive

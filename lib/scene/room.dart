@@ -12,18 +12,16 @@ class RoomScene extends umi.Scene {
   umi.BitmapTextSprite _score02Obj;
   umi.BitmapTextSprite _score03Obj;
 
-  umi.BitmapTextSprite _level01Obj;
-  umi.BitmapTextSprite _level02Obj;
-  umi.BitmapTextSprite _level03Obj;
-  umi.BitmapTextSprite _level04Obj;
-  umi.BitmapTextSprite _level05Obj;
+  List<umi.BitmapTextSprite> _levelObj = [];
+  List<umi.ExBlink> _levelOptObj = [];
 
   MinoGame game;
 
   RoomScene(this.game):super(
       begineColor:new umi.Color(0x00ffffff),
       endColor:new umi.Color(0xffffffff),
-      duration:1000);
+      duration:1000) {
+  }
 
   @override
   void onInit(umi.Stage stage) {
@@ -40,32 +38,21 @@ class RoomScene extends umi.Scene {
       _titleObj.y = 50.0;
       _titleObj.size = 26.0;
 
-      {
-        _level01Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc, message: "1");
-        _level01Obj.x = 200+30.0;
-        _level01Obj.y = 50.0;
-        _level01Obj.size = 22.0;
-
-        _level02Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc, message: "2");
-        _level02Obj.x = 200+50.0;
-        _level02Obj.y = 50.0;
-        _level02Obj.size = 22.0;
-
-        _level03Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc, message: "3");
-        _level03Obj.x = 200+70.0;
-        _level03Obj.y = 50.0;
-        _level03Obj.size = 22.0;
-
-        _level04Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc, message: "4");
-        _level04Obj.x = 200+90.0;
-        _level04Obj.y = 50.0;
-        _level04Obj.size = 22.0;
-
-        _level05Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc, message: "5");
-        _level05Obj.x = 200+110.0;
-        _level05Obj.y = 50.0;
-        _level05Obj.size = 22.0;
-
+      for(int i=0;i<5;i++) {
+        umi.BitmapTextSprite tmp = new umi.BitmapTextSprite(fontImage, fontJsonSrc, message: (i+1).toString());
+        tmp.x = 200+30.0*i;
+        tmp.y = 50.0;
+        tmp.size = 22.0;
+        umi.ExBlink ex = new umi.ExBlink(tmp);
+        if(game.level == i+1) {
+          ex.start();
+        } else {
+          ex.stop();
+        }
+        tmp.addExtension(ex);
+        _levelObj.add(tmp);
+        _levelOptObj.add(ex);
+        addChild(tmp);
       }
 
       _playObj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "PLAY");//, rect:new umi.Rect(0.0,0.0,100.0,20.0));
@@ -85,19 +72,19 @@ class RoomScene extends umi.Scene {
       _score00Obj.y = 100.0;
       _score00Obj.size = 15.0;
 
-      _score01Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "01: "+(game.ranking.length == 0?"..":"${game.ranking[0]}"));
+      _score01Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "01: "+(game.ranking.length == 2?"..":"${game.ranking[2]}"));
       _score01Obj.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
       _score01Obj.x = 30.0;
       _score01Obj.y = 120.0;
       _score01Obj.size = 15.0;
 
-      _score02Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "02: "+(game.ranking.length == 0?"..":"${game.ranking[1]}"));
+      _score02Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "02: "+(game.ranking.length == 1?"..":"${game.ranking[1]}"));
       _score02Obj.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
       _score02Obj.x = 30.0;
       _score02Obj.y = 140.0;
       _score02Obj.size = 15.0;
 
-      _score03Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "03: "+(game.ranking.length == 0?"..":"${game.ranking[2]}"));
+      _score03Obj = new umi.BitmapTextSprite(fontImage, fontJsonSrc,message: "03: "+(game.ranking.length == 0?"..":"${game.ranking[0]}"));
       _score03Obj.color = new umi.Color(0xffffffff);//new umi.Color(0x11111111);
       _score03Obj.x = 30.0;
       _score03Obj.y =160.0;
@@ -109,13 +96,6 @@ class RoomScene extends umi.Scene {
       addChild(_score01Obj);
       addChild(_score02Obj);
       addChild(_score03Obj);
-
-      addChild(_level01Obj);
-      addChild(_level02Obj);
-      addChild(_level03Obj);
-      addChild(_level04Obj);
-      addChild(_level05Obj);
-
 
     });
   }
