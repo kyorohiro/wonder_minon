@@ -10,6 +10,10 @@ class Front extends umi.Scene {
   umi.Sprite buttonR;
   umi.ExButton buttonREx;
 
+  umi.Sprite buttonStop;
+  umi.ExButton buttonStopEx;
+
+  bool _isStop = false;
 
   Front():super(
       begineColor:new umi.Color(0x00ffffff),
@@ -22,31 +26,23 @@ class Front extends umi.Scene {
     print("oninit# StartScene");
     this.builder = stage.context;
 
-    Future.wait([builder.loadImage("assets/se_play.png"), builder.loadString("assets/se_play.json")]).then((List<Object> vs) {
-      umi.Image image = vs[0];
-      umi.SpriteSheetInfo spriteInfo = new umi.SpriteSheetInfo.fronmJson(vs[1]);
-/*
-      umi.Rect src2 = spriteInfo.frameFromFileName("BT01.png").srcRect;
-      umi.Rect dst2 = spriteInfo.frameFromFileName("BT01.png").dstRect;
+    buttonL = new umi.Sprite.empty(w:200.0,h:200.0,color:new umi.Color.argb(0xaa, 0xaa, 0xaa, 0xff));
+    buttonL.addExtension(buttonLEx= new umi.ExButton(buttonL, "l", (String l){}));
 
-      umi.Rect src1 = spriteInfo.frameFromFileName("BT02.png").srcRect;
-      umi.Rect dst1 = spriteInfo.frameFromFileName("BT02.png").dstRect;
-*/
-      //1
-      buttonL = new umi.Sprite.empty(w:200.0,h:200.0,color:new umi.Color.argb(0xaa, 0xaa, 0xaa, 0xff));
-      buttonR = new umi.Sprite.empty(w:200.0,h:200.0,color:new umi.Color.argb(0xaa, 0xaa, 0xff, 0xaa));
+    buttonR = new umi.Sprite.empty(w:200.0,h:200.0,color:new umi.Color.argb(0xaa, 0xaa, 0xff, 0xaa));
+    buttonR.addExtension(buttonREx= new umi.ExButton(buttonL, "r", (String l){}));
 
-      buttonL.addExtension(buttonLEx= new umi.ExButton(buttonL, "l", (String l){}));
-      buttonR.addExtension(buttonREx= new umi.ExButton(buttonL, "r", (String l){}));
+    buttonStop = new umi.Sprite.empty(w:200.0,h:50.0,color:new umi.Color.argb(0xaa, 0xff, 0x88, 0x88));
+    buttonStop.addExtension(buttonStopEx= new umi.ExButton(buttonL, "s", (String l){
+      _isStop = (_isStop?false:true);
+    }));
 
-      addChild(buttonL);
-      addChild(buttonR);
-
-    });
-
-    //
     joystick = new umi.Joystick();
+
+    addChild(buttonL);
+    addChild(buttonR);
     addChild(joystick);
+    addChild(buttonStop);
   }
 
   void onPaint(umi.Stage stage, umi.Canvas canvas) {
@@ -67,6 +63,12 @@ class Front extends umi.Scene {
       buttonR.y = stage.h-100.0;
       buttonR.scaleX = 0.2;
       buttonR.scaleY = 0.2;
+    }
+    if(buttonStop != null) {
+      buttonStop.x = stage.w/2;//-buttonStop.w/2;
+      buttonStop.y = stage.h-50.0;
+      buttonStop.scaleX = 0.2;
+      buttonStop.scaleY = 0.2;
     }
   }
 }
