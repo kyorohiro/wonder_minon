@@ -12,7 +12,6 @@ part 'scene/start.dart';
 part 'scene/room.dart';
 part 'scene/play.dart';
 part 'scene/clear.dart';
-part 'layer/front.dart';
 part 'db/db.dart';
 
 
@@ -31,16 +30,16 @@ request(umi.GameWidget widget, String requst) async {
   }
   else if(requst == "room") {
     widget.stage.root.clearChild();
-    widget.stage.root.addChild(new RoomScene(game, (widget.stage.front as Front).joystick));
+    widget.stage.root.addChild(new RoomScene(game, (widget.stage.front as umi.GameController01).joystick));
     (widget.stage.background as umi.Background).start(end:new umi.Color(0xff999999),duration: 60);
   }
   else if(requst.startsWith("play")) {
     int level = int.parse(Uri.parse(requst).queryParameters["level"]);
     widget.stage.root.clearChild();
     widget.stage.root.addChild(new PlayScene(widget, game,
-        (widget.stage.front as Front).joystick,
-        (widget.stage.front as Front).buttonLEx,
-        (widget.stage.front as Front).buttonREx,
+        (widget.stage.front as umi.GameController01).joystick,
+        (widget.stage.front as umi.GameController01).buttonLEx,
+        (widget.stage.front as umi.GameController01).buttonREx,
         level: level));
   }
   else if(requst == "clear") {
@@ -75,7 +74,7 @@ Future onStart(umi.GameWidget widget) async {
   int startTime = new DateTime.now().millisecondsSinceEpoch;
   int curretTime = startTime;
   int prevTime = startTime;
-  widget.stage.front = new Front();
+  widget.stage.front = new umi.GameController01();
   int wait = 15;
   do {
     if(!widget.stage.startable) {
