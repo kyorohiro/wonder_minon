@@ -17,13 +17,17 @@ class RoomScene extends umi.Scene {
 
   MinoGame game;
   umi.Joystick joystick;
+  umi.ExButton buttonL;
+  umi.ExButton buttonR;
 
-  RoomScene(this.game, this.joystick):super(
+  RoomScene(this.game, this.joystick, this.buttonL, this.buttonR):super(
       begineColor:new umi.Color(0x00ffffff),
       endColor:new umi.Color(0xffffffff),
       duration:1000) {
     this.joystick.registerDown = false;
     this.joystick.registerUp = false;
+    this.buttonL.isTouch = false;
+    this.buttonR.isTouch = false;
   }
 
   @override
@@ -64,8 +68,7 @@ class RoomScene extends umi.Scene {
       _playObj.y = 200.0;
       _playObj.size = 20.0;
       _playObj.addExtension(new umi.ExButton(_playObj, "test", (String id){
-        print("id");
-        request(stage.context, "play?level=${game.level}");
+        clickPlay(stage);
       }));
       _playObj.addExtension(new umi.ExBlink(_playObj));
 
@@ -135,7 +138,16 @@ class RoomScene extends umi.Scene {
     }
     this.joystick.registerUp = false;
 
+    if(this.buttonR.isTouch || this.buttonL.isTouch) {
+      clickPlay(stage);
+    }
   }
+
+
+  void clickPlay(umi.Stage stage) {
+    request(stage.context, "play?level=${game.level}");
+  }
+
   void onPaint(umi.Stage stage, umi.Canvas canvas) {
   }
 }
