@@ -49,11 +49,16 @@ request(umi.GameWidget widget, String requst) async {
         controller01.joystick,
         controller01.buttonLEx,
         controller01.buttonREx,
+        controller01.buttonStopEx,
         level: level));
   }
   else if(requst == "clear") {
     widget.stage.root.clearChild();
-    widget.stage.root.addChild(new ClearScene(game.score));
+    widget.stage.root.addChild(new ClearScene(game.score,
+        controller01.joystick,
+        controller01.buttonLEx,
+        controller01.buttonREx
+    ));
   }
   else if(requst == "save") {
     await db.setRank(game.ranking);

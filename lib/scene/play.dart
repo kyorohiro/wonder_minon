@@ -16,7 +16,7 @@ class PlayScene extends umi.DisplayObject {
 
   umi.GameWidget builder;
   MinoGame game;
-  bool isStart = true;
+
 
   MinoTableUI playboard;
   MinoNextUI nextUI;
@@ -27,8 +27,9 @@ class PlayScene extends umi.DisplayObject {
   umi.Joystick joystick;
   umi.ExButton rotateL;
   umi.ExButton rotateR;
-
-  PlayScene(this.builder, this.game, this.joystick, this.rotateL, this.rotateR, {int level: 1}) {
+  umi.ExButton stopBtn;
+  bool get isStart => !stopBtn.isOn;
+  PlayScene(this.builder, this.game, this.joystick, this.rotateL, this.rotateR, this.stopBtn, {int level: 1}) {
     playboard = new MinoTableUI(builder, game.table);
     nextUI = new MinoNextUI(builder);
     scoreUI = new ScoreUI(this.spriteInfo, this.image);
@@ -146,11 +147,6 @@ class PlayScene extends umi.DisplayObject {
   }
 
   void onTickStop(umi.Stage stage, int timeStamp) {}
-  onTouchCallback(String id) {
-    if (id == "s") {
-      isStart = (!isStart);
-    }
-  }
 }
 
 

@@ -42,8 +42,12 @@ class ClearScene extends umi.Scene {
     return type;
   }
 
+  umi.Joystick joystick;
+  umi.ExButton buttonL;
+  umi.ExButton buttonR;
   int score;
-  ClearScene(this.score) {
+  ClearScene(this.score,this.joystick, this.buttonL, this.buttonR) {
+
   }
 
   void onInit(umi.Stage stage) {
@@ -88,7 +92,7 @@ class ClearScene extends umi.Scene {
   bool onTouch(umi.Stage stage, int id, umi.StagePointerType type, double globalX, globalY) {
     if (isTouch == true && type == umi.StagePointerType.UP) {
       isTouch = false;
-      request(this.builder, "room");
+      clickEnd(stage);
     } else if (type == umi.StagePointerType.DOWN) {
       isTouch = true;
     }
@@ -101,6 +105,17 @@ class ClearScene extends umi.Scene {
     }
     if (fontimg != null && fontInfo != null) {
       fontInfo.drawText(canvas, fontimg, currentMessage, 20.0, rect: new umi.Rect(40.0, 230.0, 350.0, 200.0));
+    }
+  }
+
+  void clickEnd(umi.Stage stage) {
+    request(stage.context, "room");
+  }
+
+  void onTick(umi.Stage stage, int timeStamp) {
+    super.onTick(stage, timeStamp);
+    if(this.buttonR.isTouch || this.buttonL.isTouch) {
+      clickEnd(stage);
     }
   }
 }
