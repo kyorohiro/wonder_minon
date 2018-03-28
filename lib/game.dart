@@ -16,6 +16,7 @@ part 'db/db.dart';
 
 
 MinoGame game = new MinoGame();
+umi.GameController01 controller01 = new umi.GameController01();
 Database db;
 
 request(umi.GameWidget widget, String requst) async {
@@ -26,7 +27,11 @@ request(umi.GameWidget widget, String requst) async {
   else if(requst == "start") {
     print("start request");
     widget.stage.root.clearChild();
-    widget.stage.root.addChild(new StartScene());
+    widget.stage.root.addChild(new StartScene(
+      controller01.joystick,
+      controller01.buttonLEx,
+      controller01.buttonREx
+    ));
   }
   else if(requst == "room") {
     widget.stage.root.clearChild();
@@ -37,9 +42,9 @@ request(umi.GameWidget widget, String requst) async {
     int level = int.parse(Uri.parse(requst).queryParameters["level"]);
     widget.stage.root.clearChild();
     widget.stage.root.addChild(new PlayScene(widget, game,
-        (widget.stage.front as umi.GameController01).joystick,
-        (widget.stage.front as umi.GameController01).buttonLEx,
-        (widget.stage.front as umi.GameController01).buttonREx,
+        controller01.joystick,
+        controller01.buttonLEx,
+        controller01.buttonREx,
         level: level));
   }
   else if(requst == "clear") {
@@ -74,7 +79,7 @@ Future onStart(umi.GameWidget widget) async {
   int startTime = new DateTime.now().millisecondsSinceEpoch;
   int curretTime = startTime;
   int prevTime = startTime;
-  widget.stage.front = new umi.GameController01();
+  widget.stage.front = controller01;
   int wait = 15;
   do {
     if(!widget.stage.startable) {

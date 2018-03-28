@@ -28,7 +28,7 @@ class PlayScene extends umi.DisplayObject {
   umi.ExButton rotateL;
   umi.ExButton rotateR;
 
-  PlayScene(this.builder, this.game, this.joystick,  this.rotateL,this.rotateR,{int level: 1}) {
+  PlayScene(this.builder, this.game, this.joystick, this.rotateL, this.rotateR, {int level: 1}) {
     playboard = new MinoTableUI(builder, game.table);
     nextUI = new MinoNextUI(builder);
     scoreUI = new ScoreUI(this.spriteInfo, this.image);
