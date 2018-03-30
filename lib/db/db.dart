@@ -22,12 +22,13 @@ class Database {
 
   load() async {
     try {
-      fs.cd((await fs.getHomeDirectory()).path);
+      await fs.checkPermission();
+      await fs.cd((await fs.getHomeDirectory()).path);
       umiio.File f = await fs.getEntry("database.dat");
       List<int> t = await f.readAsBytes(0, await f.getLength());
-      String v = conv.UTF8.decode(t);
+      String v = conv.utf8.decode(t);
       print("##### load database.dat ${v}");
-      Map d = conv.JSON.decode(v);
+      Map d = conv.json.decode(v);
       rank.clear();
       for (int v in d["rank"]) {
         print("## ${v}");
@@ -39,13 +40,14 @@ class Database {
   }
 
   save() async {
-      fs.cd((await fs.getHomeDirectory()).path);
-      umiio.File f = await fs.getEntry("database.dat");
+    await fs.checkPermission();
+    await fs.cd((await fs.getHomeDirectory()).path);
+    umiio.File f = await fs.getEntry("database.dat");
     try {
       await f.truncate(0);
     } catch (e) {
       print("e: truncate ${e}");
     }
-    f.writeAsBytes(conv.UTF8.encode(await createData()), 0);
+    await f.writeAsBytes(conv.UTF8.encode(await createData()), 0);
   }
 }
